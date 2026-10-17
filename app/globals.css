@@ -11,6 +11,9 @@
   --color-ink: #4a2c36;
   --color-ink-soft: #7d5c66;
   --color-line: #06c755;
+  --color-nude: #e9b48f;
+  --color-bronze: #b9774f;
+  --color-wood: #c9a27e;
 
   /* ฟอนต์ */
   --font-sans: var(--font-body);

@@ -1,3 +1,5 @@
+import { ProductArt, type ArtKind } from "./ProductArt";
+
 const LINE_ID = "@sai12";
 const LINE_URL = `https://line.me/R/ti/p/${LINE_ID}`;
 
@@ -19,11 +21,15 @@ const features = [
   },
 ] as const;
 
-const products = [
-  { name: "ลิปสติก & ลิปทินท์", detail: "สีสวยติดทน หลายเฉดให้เลือก", price: "เริ่มต้น 199 บาท" },
-  { name: "คุชชั่น & รองพื้น", detail: "ปกปิดเนียน บางเบา ไม่หนักหน้า", price: "เริ่มต้น 390 บาท" },
-  { name: "อายแชโดว์ & บลัชออน", detail: "โทนอบอุ่น แต่งง่ายทุกวัน", price: "เริ่มต้น 250 บาท" },
-  { name: "สกินแคร์", detail: "บำรุงผิวก่อนแต่งหน้า ให้ผิวพร้อมทุกวัน", price: "เริ่มต้น 290 บาท" },
+const products: { name: string; detail: string; price: string; art: ArtKind }[] = [
+  { name: "ลิปสติก", detail: "สีสวยติดทน หลายเฉด", price: "199 บาท", art: "lipstick" },
+  { name: "ลิปทินท์", detail: "ปากฉ่ำ ดูเป็นธรรมชาติ", price: "159 บาท", art: "tint" },
+  { name: "คุชชั่น", detail: "ปกปิดเนียน บางเบา", price: "390 บาท", art: "cushion" },
+  { name: "อายแชโดว์", detail: "พาเลทโทนอบอุ่น แต่งง่าย", price: "350 บาท", art: "palette" },
+  { name: "บลัชออน", detail: "แก้มอมชมพูน่ารัก", price: "250 บาท", art: "blush" },
+  { name: "มาสคาร่า", detail: "ขนตางอนยาว ไม่จับตัว", price: "220 บาท", art: "mascara" },
+  { name: "เซรั่ม", detail: "ผิวชุ่มชื้น พร้อมแต่งหน้า", price: "450 บาท", art: "serum" },
+  { name: "ครีมบำรุง", detail: "บำรุงล้ำลึก อ่อนโยน", price: "390 บาท", art: "cream" },
 ];
 
 const faqs = [
@@ -167,6 +173,12 @@ export default function Home() {
             <div className="mt-8">
               <LineButton className="w-full sm:w-auto" />
             </div>
+            <div className="mx-auto mt-12 flex max-w-md items-end justify-center gap-2 sm:gap-6" aria-hidden>
+              <ProductArt kind="serum" className="h-20 w-20 sm:h-28 sm:w-28" />
+              <ProductArt kind="lipstick" className="h-24 w-24 sm:h-32 sm:w-32" />
+              <ProductArt kind="cushion" className="h-20 w-20 sm:h-28 sm:w-28" />
+              <ProductArt kind="tint" className="h-16 w-16 sm:h-24 sm:w-24" />
+            </div>
           </div>
         </section>
 
@@ -192,19 +204,23 @@ export default function Home() {
         <section id="products" className="scroll-mt-16 bg-blush/60 px-4 py-16 md:py-24">
           <div className="mx-auto max-w-5xl">
             <SectionTitle eyebrow="สินค้าของเรา" title="เลือกสิ่งที่ใช่สำหรับคุณ" />
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
               {products.map((p, i) => (
-                <div key={p.name} className="flex items-start gap-4 rounded-3xl bg-white p-6 shadow-sm">
+                <div
+                  key={p.name}
+                  className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-petal/50"
+                >
                   <div
-                    className={`h-16 w-16 shrink-0 rounded-2xl ${
-                      ["bg-rose", "bg-petal", "bg-rose-dark", "bg-blush ring-1 ring-petal"][i % 4]
+                    className={`flex aspect-square items-center justify-center ${
+                      ["bg-blush", "bg-cream", "bg-petal/40", "bg-blush/50"][i % 4]
                     }`}
-                    aria-hidden
-                  />
-                  <div className="min-w-0">
+                  >
+                    <ProductArt kind={p.art} className="h-3/5 w-3/5" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-4">
                     <h3 className="text-h3 font-medium">{p.name}</h3>
-                    <p className="text-ink-soft">{p.detail}</p>
-                    <p className="mt-1 font-semibold text-rose-dark">{p.price}</p>
+                    <p className="flex-1 text-sm leading-relaxed text-ink-soft">{p.detail}</p>
+                    <p className="mt-2 font-semibold text-rose-dark">{p.price}</p>
                   </div>
                 </div>
               ))}
